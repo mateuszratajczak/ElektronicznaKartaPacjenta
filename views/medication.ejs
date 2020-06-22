@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Medication</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a href="/showmedicationstate?id=<%= pat %>&find=<%= find %>" class="button">WSTECZ</a> <br><br>
+
+    
+            <% if(bundle.entry) { %>
+                <section>
+             <% for(var i = 0; i < bundle.entry.length; i++) { %>
+
+                <div id='ramka'>
+                        ID: <%= bundle.entry[i].resource.id %> <br>
+                        NAME: <%- bundle.entry[i].resource.text.div %> <br>
+                </div>
+
+            <% } %>  
+        </section>
+            <% } else { %>
+                <div class="alert">
+                    Brak danych o lekach pacjenta.
+                </div> 
+            <% } %>
+        
+</body>
+</html>

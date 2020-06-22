@@ -1,0 +1,78 @@
+*{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+.button {
+    text-decoration: none;
+    background-color: #1B5E20;
+    color: white;
+    padding: 5px 30px;
+    border: 1px solid #4CAF50;
+    
+
+}
+.button_light {
+    text-decoration: none;
+    background-color: #1B5E20;
+    color: white;
+    padding: 2px 30px;
+    border: 1px solid #4CAF50;
+    
+
+}
+.button:hover{
+    border:1px solid red;
+}
+
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+tr:nth-child(even){background-color: #f2f2f2;}
+
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #1B5E20;
+  color: white;
+}
+ 
+ .alert {
+  padding: 20px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+} 
+section{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+	#ramka {
+  width: 22%;
+  transition: box-shadow .3s;
+  padding: 20px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
+  float: left;
+  
+}

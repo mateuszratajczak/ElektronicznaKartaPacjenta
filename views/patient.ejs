@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Patient List</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div style="text-align: center;">
+        <form method="GET" action="/showpatlist">
+            <input type="text" placeholder="Wpisz nazwisko" name="patient" value="<%= find %>" /> <br>
+            <input type="submit" value="Wyszukaj" class="button"/>
+        </form>
+    </div>
+    <br><br>
+    <table style="border-collapse: collapse; margin: 0 auto;">
+        <tr>
+            <th style="width: 300px; text-align: center;">ID</th>
+            <th style="width: 300px; text-align: center;">NAME</th>
+            <th style="width: 150px; text-align: center;">BIRTH DATE</th>
+            <th style="width: 150px; text-align: center;">GENDER</th>
+            <th style="width: 250px; text-align: center;">OBSERVATIONS</th>
+            <th style="width: 250px; text-align: center;">MEDICATION STATEMENTS</th>
+        </tr>
+    <% if(bundle.entry) { %>
+        <% for(var i = 0; i < bundle.entry.length; i++) { %>
+                <tr>
+            <td style="width: 300px; text-align: center;"><%= bundle.entry[i].resource.id %></td>
+            <td style="width: 300px; text-align: center;"><% if(bundle.entry[i].resource.name) { %>
+                <%= bundle.entry[i].resource.name[0].given %>
+                <%= bundle.entry[i].resource.name[0].family %>
+                <% } %></td>
+            <td style="width: 150px; text-align: center;"><%= bundle.entry[i].resource.birthDate %></td>
+            <td style="width: 150px; text-align: center;"><%= bundle.entry[i].resource.gender %></td>
+            <td style="width: 250px; text-align: center;"><a href="/showobservation?id=<%= bundle.entry[i].resource.id %>&find=<%= find %>" class="button">Observation</a></td>
+            <td style="width: 250px; text-align: center;"><a href="/showmedicationstate?id=<%= bundle.entry[i].resource.id %>&find=<%= find %>" class="button">MedicationStatement</a></td>
+        </tr>
+        <% } %>     
+    <% } else { %>
+        <div class="alert">
+            Nie znaleziono żadnego pacjenta.
+          </div> 
+    <% } %>
+</table>
+</body>
+</html>

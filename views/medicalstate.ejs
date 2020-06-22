@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Patient's MediacationStatement</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a href="/showpatlist?patient=<%= find %>" class="button">WSTECZ</a>
+
+    
+            <% if(bundle.entry) { %>
+                <section>
+             <% for(var i = 0; i < bundle.entry.length; i++) { %>
+
+                <div id='ramka'>
+                        ID: <%= bundle.entry[i].resource.id %> <br>
+                        PATIENT: <%= bundle.entry[i].resource.subject.reference %> <br>
+                        STATUS: <%= bundle.entry[i].resource.status %> <br>
+                        <%  if(bundle.entry[i].resource.medicationCodeableConcept) { 
+                            %> MEDICATION
+                            <%  if(bundle.entry[i].resource.medicationCodeableConcept.text) 
+                                { 
+                            %>
+                                <%=  bundle.entry[i].resource.medicationCodeableConcept.text %> <br>
+                            <%   } 
+                                else {
+                                    if(bundle.entry[i].resource.medicationCodeableConcept.coding) 
+                                    { 
+                            %>
+                                <%=  bundle.entry[i].resource.medicationCodeableConcept.coding[0].display %> <br>
+                            <%   } 
+                                } %>
+                            <% }
+                            else{
+                                if(bundle.entry[i].resource.medicationReference){ %>
+                                    <% if(bundle.entry[i].resource.medicationReference.display){ %>
+                                        MEDICATION <%=  bundle.entry[i].resource.medicationReference.display %> <br>
+                                    <% } else { %>
+                                        MEDICATION: <a href="/showmedication?id=<%=  bundle.entry[i].resource.medicationReference.reference %>&patient=<%= bundle.entry[i].resource.subject.reference.split('/')[1] %>&find=<%= find %> " class='button_light'>Pokaż</a><br>
+                                
+
+
+
+                                <% }
+                            }
+                        }
+                            %>
+                        <% if(bundle.entry[i].resource.dosage){ %>
+                            <% if(bundle.entry[i].resource.dosage[0].text){ %>
+                                DOSAGE: <%= bundle.entry[i].resource.dosage[0].text %> <br>
+                            <% } else { %>
+                                DOSAGE: <%= bundle.entry[i].resource.dosage[0].timing.repeat.frequency %> x <%= bundle.entry[i].resource.dosage[0].timing.repeat.period %> <%= bundle.entry[i].resource.dosage[0].timing.repeat.periodUnit %> <br>
+                            <% } %>
+                        <% } %>
+                        <% if(bundle.entry[i].resource.reasonCode){ %>
+                            REASON: <%= bundle.entry[i].resource.reasonCode[0].text %> <br>
+                        <% } %>
+                </div>
+
+            <% } %>  
+        </section>
+            <% } else { %>
+                <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            Brak danych o lekach pacjenta.
+          </div> 
+            <% } %>
+        
+</body>
+</html>

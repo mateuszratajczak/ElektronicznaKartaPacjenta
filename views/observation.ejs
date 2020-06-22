@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Patient's Observation</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <section>
+    <a href="/showpatlist?patient=<%= find %>" class="button">WSTECZ</a>
+    </section>
+    
+    <% if(bundle.entry) { %>
+        <div style="text-align: left; width:100%; ">
+            <table style="margin: 0 auto;">
+                <form method="GET" action="/showobservation">
+                    <input type="hidden" name="id" value="<%= bundle.entry[0].resource.subject.reference.split('/')[1] %>"/>
+                    <input type="hidden" name="find" value="<%= find %>"/>
+                    <tr>
+                        <td><label>Data początkowa:</label></td>
+                        <td><input type="date" name="start" value="<%= start %>"> </td>
+                    </tr>
+                    <tr>
+                        <td><label>Data końcowa:</label></td>
+                        <td><input type="date" name="end" value="<%= end %>"> <br></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;"><input type="submit" class='button' value='WYSZUKAJ'></td>
+                    </tr>
+                </form>
+            </table>
+      </div>
+
+
+        <section>
+    <% for(var i = 0; i < bundle.entry.length; i++) { %>
+
+        <div id='ramka'>
+                ID: <%= bundle.entry[i].resource.id %> <br>
+                PATIENT: <%= bundle.entry[i].resource.subject.reference %> <br>
+                <% if(bundle.entry[i].resource.effectiveDateTime){ %>
+                    DATE: <%= bundle.entry[i].resource.effectiveDateTime %> <br>
+                <% } else if(bundle.entry[i].resource.effectivePeriod){ %>
+                    DATE: <%= bundle.entry[i].resource.effectivePeriod.start %> - <%= bundle.entry[i].resource.effectivePeriod.end %><br>
+                <% } else if(bundle.entry[i].resource.effectiveInstant){ %>
+                    DATE: <%= bundle.entry[i].resource.effectiveInstant %><br>
+                <% } %>
+                STATUS: <%= bundle.entry[i].resource.status %> <br>
+                NOTE: 
+                <% if(bundle.entry[i].resource.text){ %>
+                <%- bundle.entry[i].resource.text.div %>
+                <% }
+                else { %>
+                    <%= bundle.entry[i].resource.code.text %> <%= bundle.entry[i].resource.valueQuantity.value %> <%= bundle.entry[i].resource.valueQuantity.unit %>
+                    <%
+
+                } %><br>
+            </div>
+            
+    <% } %>
+</section>
+    <% } else { %>
+        <div class="alert">
+            Brak danych o obserwacjach pacjenta.
+        </div> 
+    <% } %>
+   
+</body>
+</html>
